@@ -32,7 +32,10 @@ function Cart(props) {
       </TouchableHighlight>
 
       <View style={Styles.Pannel}>
-        <Text style={Styles.Title}>Stavke</Text>
+        <View style={Styles.TitleWrapper}>
+          <Text style={Styles.TitleModal}>Stavke</Text>
+          <AntDesign name="closecircle" size={24} color="black" onPress={() => props.closeCartContent()}/>
+        </View>
         <View style={StylesHome.Cart}>
           {items}
         </View>

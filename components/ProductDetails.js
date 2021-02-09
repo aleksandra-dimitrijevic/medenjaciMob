@@ -19,7 +19,10 @@ function ProductDetails(props) {
       </TouchableHighlight>
 
       <View style={Styles.Pannel}>
-        <Text style={Styles.Title}>{props.product.name}</Text>
+        <View style={Styles.TitleWrapper}>
+          <Text style={Styles.TitleModal}>{props.product.name}</Text>
+          <AntDesign name="closecircle" size={24} color="black" onPress={() => props.closeDetails()}/>
+        </View>
         <View style={{alignItems: "center", justifyContent: "center"}}>
           <ImageBackground source={require('../assets/frame.png')}
                            style={StylesHome.Frame}>

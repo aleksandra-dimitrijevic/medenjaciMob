@@ -1,4 +1,7 @@
 import { StyleSheet } from 'react-native';
+import { Dimensions } from 'react-native';
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const Styles = StyleSheet.create({
   Input: {
@@ -70,6 +73,57 @@ const Styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     textAlign: "center"
+  },
+  ModalMenu : {
+    position: "absolute",
+    top: 50,
+    left: 8,
+    zIndex: 3,
+  },
+  PannelMenu:{
+    borderWidth:2,
+    borderColor: '#CCCCCC',
+    borderRadius: 4,
+    padding: 8,
+    backgroundColor: 'white',
+    zIndex:4,
+    width:windowWidth*0.55
+  },
+  MenuItem:{
+    fontSize: 16,
+    padding: 8,
+    fontWeight: "400",
+    borderBottomColor: '#CCCCCC',
+    borderBottomWidth: 1,
+    marginBottom: 8,
+  },
+  MenuLast:{
+    fontSize: 16,
+    fontWeight: "400",
+    padding: 8
+  },
+  ErrorMsgWrap:{
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 8
+  },
+  ErrorMsg:{
+    fontSize:14,
+    paddingLeft:8,
+    fontWeight: 'bold'
+  },
+  TitleModal: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  TitleWrapper:{
+    padding: 8,
+    borderBottomColor: '#CCCCCC',
+    borderBottomWidth: 2,
+    marginBottom: 8,
+    flexDirection: 'row',
+    justifyContent: "space-between"
   }
 });
 

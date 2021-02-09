@@ -75,6 +75,16 @@ const StylesHome = StyleSheet.create({
   Cart:{
     height: windowHeight*0.40,
     overflow: "scroll"
+  },
+  CartCount:{
+    position: 'absolute',
+    top:0,
+    right:0,
+    backgroundColor:'orange',
+    color:'white',
+    paddingLeft:8,
+    paddingRight:8,
+    borderRadius: 10
   }
 });
 

@@ -12,24 +12,46 @@ import { MaterialIcons } from '@expo/vector-icons';
 import {products} from '../data/products'
 import ProductDetails from '../components/ProductDetails'
 import Cart from "../components/Cart";
+import UserInfo from "../components/UserInfo";
+import ChangePassword from "../components/ChangePassword";
 
 
 function HomeScreen({navigation}) {
   const [page, setPage] = React.useState(0);
   const [product, setProduct] = React.useState(null);
   const [openCart, setOpenCart] = React.useState(false);
+  const [userInfo, setUserInfo] = React.useState(false);
+  const [changePass, setChangePass] = React.useState(false);
 
-  const closeCartContent = () => {
-    setOpenCart(false)
-  }
+  const closeCartContent = () => setOpenCart(false);
   const openCartContent = () => {
-    setOpenCart(true)
+    setChangePass(false);
+    setUserInfo(false);
+    setProduct(false);
+    setOpenCart(true);
   }
-  const closeDetails = () => {
-    setProduct(null)
+  const closeDetails = () => setProduct(null);
+  const openDetails = (product) => setProduct(product);
+
+  const openUserInfo = () => {
+    setChangePass(false);
+    setProduct(false);
+    setOpenCart(false);
+    setUserInfo(true);
   }
-  const openDetails = (product) => {
-    setProduct(product)
+  const closeUserInfo = () => setUserInfo(false);
+  const openChangePass = () => {
+    setUserInfo(false);
+    setProduct(false);
+    setOpenCart(false);
+    setChangePass(true);
+  }
+  const closeChangePass = () => setChangePass(false);
+  const closeAll = () =>{
+    setUserInfo(false);
+    setProduct(false);
+    setOpenCart(false);
+    setChangePass(false);
   }
  
   var productsOnPage = products.slice(page*3, page*3+2<products.length ? page*3+3: products.length+1);
@@ -51,12 +73,14 @@ function HomeScreen({navigation}) {
     <View style = {{flex:1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'white'}}>
       <ImageBackground source= {require('../assets/home_1.png')}
        style={[StylesHome.BackgroundImage]}>
-       <Header openCartContent = {openCartContent}/>
+       <Header openCartContent = {openCartContent} openUserInfo={openUserInfo} openChangePass={openChangePass} closeAll={closeAll}/>
+
        { openCart && <Cart closeCartContent={closeCartContent}/>}
-
        { product && <ProductDetails closeDetails = {closeDetails} product = {product}/>}
+       { userInfo && <UserInfo closeUserInfo = {closeUserInfo}/>}
+       { changePass && <ChangePassword closeChangePass={closeChangePass}/> }
 
-       { !product && !openCart &&
+       { !product && !openCart && !userInfo && ! changePass &&
          <>
           { page!== 0 && <View style={StylesHome.Arrow}>
             <MaterialIcons.Button 
