@@ -31,14 +31,17 @@ class AuthStore {
       this.inputs = initialInputs;
       this.errors = initialInputs;
     });
+
+    reaction(() => this.success?.length > 0, () => {
+      setTimeout(() => this.success = undefined, 1500);
+    })
   }
 
   @computed get isLoggedIn() {
     return Boolean(this.currentUser);
   }
   @action reset = () =>{
-    this.error = undefined;
-    this.success = undefined;
+    this.errors = initialInputs;
   }
 
   @action logIn = () => {
@@ -50,7 +53,7 @@ class AuthStore {
         return;
       }
       this.error= undefined;
-      CartStore.onInit();
+      CartStore.onInit(this.currentUser);
     }
     else {
       this.error = 'All fields are required!'
@@ -83,7 +86,7 @@ class AuthStore {
       }
       this.users.push(this.currentUser);
       this.error= undefined;
-      CartStore.onInit();
+      CartStore.onInit(this.currentUser);
     }
     else {
       this.error = 'All fields are required!'

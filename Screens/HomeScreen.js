@@ -1,11 +1,7 @@
 import * as React from 'react';
-import { Button, View, Text, TextInput, ImageBackground } from 'react-native';
+import { View, ImageBackground } from 'react-native';
 import { observer } from 'mobx-react';
-import { Entypo,  Feather  } from '@expo/vector-icons'; 
-
-import Styles from '../styles';
 import StylesHome from '../styles/home'
-import AuthStore from '../stores/AuthStore';
 import Header from '../components/Header'
 import Product from '../components/Product'
 import { MaterialIcons } from '@expo/vector-icons';
@@ -15,45 +11,26 @@ import Cart from "../components/Cart";
 import UserInfo from "../components/UserInfo";
 import ChangePassword from "../components/ChangePassword";
 
+const CONTENT = { HOME: 0, DETAILS: 1, CART: 2, INFO: 3, CHANGE_PASSWORD: 4 }
 
 function HomeScreen({navigation}) {
   const [page, setPage] = React.useState(0);
+  const [content, setContent] = React.useState(CONTENT.HOME);
   const [product, setProduct] = React.useState(null);
-  const [openCart, setOpenCart] = React.useState(false);
-  const [userInfo, setUserInfo] = React.useState(false);
-  const [changePass, setChangePass] = React.useState(false);
 
-  const closeCartContent = () => setOpenCart(false);
-  const openCartContent = () => {
-    setChangePass(false);
-    setUserInfo(false);
-    setProduct(false);
-    setOpenCart(true);
+  const openCartContent = () => setContent(CONTENT.CART);
+  const openUserInfo = () => setContent(CONTENT.INFO);
+  const openChangePass = () => setContent(CONTENT.CHANGE_PASSWORD);
+  const closeAll = () => setContent(CONTENT.HOME);
+  const closeDetails = () => {
+    setProduct(null);
+    setContent(CONTENT.HOME);
   }
-  const closeDetails = () => setProduct(null);
-  const openDetails = (product) => setProduct(product);
+  const openDetails = (product) => {
+    setProduct(product);
+    setContent(CONTENT.DETAILS);
+  }
 
-  const openUserInfo = () => {
-    setChangePass(false);
-    setProduct(false);
-    setOpenCart(false);
-    setUserInfo(true);
-  }
-  const closeUserInfo = () => setUserInfo(false);
-  const openChangePass = () => {
-    setUserInfo(false);
-    setProduct(false);
-    setOpenCart(false);
-    setChangePass(true);
-  }
-  const closeChangePass = () => setChangePass(false);
-  const closeAll = () =>{
-    setUserInfo(false);
-    setProduct(false);
-    setOpenCart(false);
-    setChangePass(false);
-  }
- 
   var productsOnPage = products.slice(page*3, page*3+2<products.length ? page*3+3: products.length+1);
   var honeys =[];
   productsOnPage.forEach( (product,index) => {
@@ -61,6 +38,7 @@ function HomeScreen({navigation}) {
   })
 
   const changePage = (newP) =>{
+
     setPage(newP);
     productsOnPage = products.slice(newP*3, newP*3+2<products.length ? newP*3+3: products.length+1);
     honeys =[];
@@ -75,12 +53,11 @@ function HomeScreen({navigation}) {
        style={[StylesHome.BackgroundImage]}>
        <Header openCartContent = {openCartContent} openUserInfo={openUserInfo} openChangePass={openChangePass} closeAll={closeAll}/>
 
-       { openCart && <Cart closeCartContent={closeCartContent}/>}
-       { product && <ProductDetails closeDetails = {closeDetails} product = {product}/>}
-       { userInfo && <UserInfo closeUserInfo = {closeUserInfo}/>}
-       { changePass && <ChangePassword closeChangePass={closeChangePass}/> }
-
-       { !product && !openCart && !userInfo && ! changePass &&
+       { content===CONTENT.CART && <Cart closeCartContent={closeAll}/>}
+       { content===CONTENT.DETAILS && <ProductDetails closeDetails = {closeDetails} product = {product}/>}
+       { content===CONTENT.INFO && <UserInfo closeUserInfo = {closeAll}/>}
+       { content===CONTENT.CHANGE_PASSWORD && <ChangePassword closeChangePass={closeAll}/> }
+       { content===CONTENT.HOME &&
          <>
           { page!== 0 && <View style={StylesHome.Arrow}>
             <MaterialIcons.Button 

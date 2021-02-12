@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Button, View, Text, TextInput, ImageBackground, KeyboardAvoidingView } from 'react-native';
 import { observer } from 'mobx-react';
-
 import Styles from '../styles';
 import AuthStore from '../stores/AuthStore';
 import {FontAwesome5, AntDesign} from "@expo/vector-icons";
@@ -40,7 +39,11 @@ function LogInScreen({navigation}) {
             </View>}
 
             <Text style={Styles.Link}
-                  onPress={() => navigation.navigate('Register')}>
+                  onPress={() => {
+                    AuthStore.error = undefined;
+                    AuthStore.reset();
+                    navigation.navigate('Register')
+                  }}>
               Register?
             </Text>
           </KeyboardAvoidingView>

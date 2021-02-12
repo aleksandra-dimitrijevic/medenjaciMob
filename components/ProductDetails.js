@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {Button, View, Text, Image, ImageBackground, TouchableHighlight, TextInput} from 'react-native';
 import {observer} from 'mobx-react';
-
 import Styles from '../styles';
 import StylesHome from '../styles/home'
 import {AntDesign} from '@expo/vector-icons';
 import {Entypo} from '@expo/vector-icons';
 import CartStore from '../stores/CartStore'
+import AuthStore from "../stores/AuthStore";
 
 
 function ProductDetails(props) {
@@ -26,7 +26,7 @@ function ProductDetails(props) {
         <View style={{alignItems: "center", justifyContent: "center"}}>
           <ImageBackground source={require('../assets/frame.png')}
                            style={StylesHome.Frame}>
-            <Image source={require('../assets/livadski1kg.jpg')} style={StylesHome.HoneyImage}/>
+            <Image source={props.product.image} style={StylesHome.HoneyImage}/>
           </ImageBackground>
 
           <View style={{flexDirection: 'row', height: 40, marginTop:8}}>
@@ -67,7 +67,7 @@ function ProductDetails(props) {
             <>
               <Entypo.Button name="shopping-cart" size={24} color="black" backgroundColor="white"/>
               <Button onPress={() => {
-                CartStore.addProduct(props.product);
+                CartStore.addProduct(props.product, AuthStore.currentUser.username);
                 setAddedToCart(true);
               }} title="Dodaj u korpu" color='#FFCC00'/>
             </>

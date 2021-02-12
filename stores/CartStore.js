@@ -14,11 +14,11 @@ class CartStore {
     return this.count;
   }
 
-  @action onInit = () => {
-    this.cart = this.carts.get(AuthStore.currentUser.username);
+  @action onInit = (currentUser) => {
+    this.cart = this.carts.get(currentUser.username);
     if(!this.cart){
-      this.carts.set(AuthStore.currentUser.username,[]);
-      this.cart = this.carts.get(AuthStore.currentUser.username);
+      this.carts.set(currentUser.username,[]);
+      this.cart = this.carts.get(currentUser.username);
     }
   }
 
@@ -30,9 +30,9 @@ class CartStore {
     if (this.count > 1) this.count = this.count - 1;
   }
 
-  @action addProduct = (product) => {
+  @action addProduct = (product, username) => {
     this.cart.push({product: product,count: this.count});
-    this.carts.set(AuthStore.currentUser.username,this.cart);
+    this.carts.set(username,this.cart);
     this.count = 1;
   }
 

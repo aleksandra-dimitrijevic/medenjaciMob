@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Button, View, Text, TextInput, ImageBackground, TouchableHighlight} from 'react-native';
+import {Button, View, Text, TextInput, TouchableOpacity} from 'react-native';
 import { observer } from 'mobx-react';
 
 import Styles from '../styles';
@@ -11,9 +11,9 @@ function ChangePassword(props) {
 
   return (
     <View style = {Styles.Modal}>
-      <TouchableHighlight onPress={() => props.closeChangePass() } style={Styles.ModalBackGround}>
+      <TouchableOpacity onPress={() => props.closeChangePass() } style={Styles.ModalBackGround}>
         <View/>
-      </TouchableHighlight>
+      </TouchableOpacity>
       <View style={[Styles.Pannel]}>
         <View style={Styles.TitleWrapper}>
           <Text style={Styles.TitleModal}>Promena sifre</Text>

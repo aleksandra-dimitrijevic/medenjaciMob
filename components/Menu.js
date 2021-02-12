@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { Button, Text } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import Styles from "../styles";
-import {TouchableHighlight} from "react-native-web";
 import AuthStore from "../stores/AuthStore";
 import {observer} from "mobx-react";
 
@@ -35,8 +34,16 @@ const MyMenu = (props) => {
       { visible &&
       <View style={Styles.ModalMenu}>
         <View style={Styles.PannelMenu}>
-            <Text style={Styles.MenuItem} onPress={() => openUserInfo()}>Licne informacije</Text>
-            <Text style={Styles.MenuItem} onPress={() => openChangePass()}>Promena sifre</Text>
+            <Text style={Styles.MenuItem} onPress={() => {
+              AuthStore.error = null;
+              AuthStore.reset();
+              openUserInfo()
+            }}>Licne informacije</Text>
+            <Text style={Styles.MenuItem} onPress={() => {
+              AuthStore.error = null;
+              AuthStore.reset();
+              openChangePass()
+            }}>Promena sifre</Text>
             <View style= {{ flexDirection: "row"}}>
               <AntDesign name="poweroff" size={18} color="black" style={{paddingTop:8,paddingLeft:8}} />
               <Text style={Styles.MenuLast} onPress={()=> logOut()}>Odjavi se</Text>

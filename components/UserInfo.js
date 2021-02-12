@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Button, View, Text, TextInput, ImageBackground, TouchableHighlight} from 'react-native';
+import {Button, View, Text, TextInput, TouchableOpacity} from 'react-native';
 import { observer } from 'mobx-react';
 
 import Styles from '../styles';
@@ -14,9 +14,9 @@ function UserInfo(props) {
 
   return (
     <View style = {Styles.Modal}>
-      <TouchableHighlight onPress={() => props.closeUserInfo() } style={Styles.ModalBackGround}>
+      <TouchableOpacity onPress={() => props.closeUserInfo() } style={Styles.ModalBackGround}>
         <View/>
-      </TouchableHighlight>
+      </TouchableOpacity>
         <View style={[Styles.Pannel]}>
           <View style={Styles.TitleWrapper}>
             <Text style={Styles.TitleModal}>Informacije</Text>
@@ -47,7 +47,7 @@ function UserInfo(props) {
               <TextInput
                 placeholder="Phone Number"
                 style={[Styles.Input, AuthStore.errors.username && Styles.InputError, {flex:1}]}
-                onChangeText={text => setPhoneNumber}
+                onChangeText={text => setPhoneNumber(text)}
                 value={phoneNumber}
               />
             </View>
